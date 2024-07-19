@@ -1,0 +1,62 @@
+.PlayBar {
+    position: relative;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: 16px;
+    box-sizing: border-box;
+    height: 80px;
+    color: #faf7f5;
+    background: #363030;
+    padding: 12px 12px 22px;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.PlayBar__detail {
+    font-weight: 600;
+    font-size: 14px;;
+}
+
+.PlayBar__title {
+    
+}
+
+.PlayBar__controls {
+    position: absolute;
+    top: calc(50% - 5px);
+    left: 50%;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    transform: translate(-50%, -50%);
+}
+
+.PlayBar__play,
+.PlayBar__next,
+.PlayBar__previous {
+    color: currentColor;
+    background: none;
+    border: 0;
+    cursor: pointer;
+}
+
+.PlayBar__next:disabled,
+.PlayBar__previous:disabled {
+    opacity: 0.5;
+}
+
+.PlayBar__progress-bar {
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 10px;
+    background: #565252;
+}
+
+.PlayBar__progress {
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: #faf7f5;
+}

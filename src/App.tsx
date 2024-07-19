@@ -1,7 +1,12 @@
 import React from 'react';
+import PlayBar from './PlayBar';
 
 const App: React.FC = () => {
-    return <div>App</div>;
+    return (
+        <div>
+            <PlayBar />
+        </div>
+    );
 };
 
 export default App;
