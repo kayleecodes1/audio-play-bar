@@ -1,10 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {
-    Pause as PauseIcon,
-    Play as PlayIcon,
-    SkipNext as SkipNextIcon,
-    SkipPrevious as SkipPreviousIcon,
-} from '../icons';
+import PlayControls from '../PlayControls';
 import { usePlaylistContext } from '../../contexts/PlaylistContext';
 import formatTime from '../../utilities/formatTime';
 import './PlayBar.css';
@@ -81,15 +76,12 @@ const PlayBar: React.FC = () => {
                     </div>
                 </div>
                 <div className="PlayBar__controls">
-                    <button className="PlayBar__previous" disabled={!navigatePrevious} onClick={navigatePrevious}>
-                        <SkipPreviousIcon size={24} />
-                    </button>
-                    <button className="PlayBar__play" onClick={togglePlay}>
-                        {isPlaying || dragState.wasPlaying ? <PauseIcon size={32} /> : <PlayIcon size={32} />}
-                    </button>
-                    <button className="PlayBar__next" disabled={!navigateNext} onClick={navigateNext}>
-                        <SkipNextIcon size={24} />
-                    </button>
+                    <PlayControls
+                        isPlaying={isPlaying || dragState.wasPlaying}
+                        onSkipNext={navigateNext}
+                        onSkipPrevious={navigatePrevious}
+                        onTogglePlay={togglePlay}
+                    />
                 </div>
             </div>
             <div className="PlayBar__progress-bar" ref={progressBarRef} onMouseDown={handleProgressMouseDown}>

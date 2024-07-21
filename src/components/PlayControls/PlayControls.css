@@ -1,0 +1,29 @@
+.PlayControls {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: 16px;
+}
+
+.PlayControls__play,
+.PlayControls__next,
+.PlayControls__previous {
+    color: currentColor;
+    background: none;
+    padding: 0;
+    border-radius: 8px;
+    border: 0;
+    cursor: pointer;
+}
+
+.PlayControls__play:hover:not(:disabled),
+.PlayControls__next:hover:not(:disabled),
+.PlayControls__previous:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.PlayControls__next:disabled,
+.PlayControls__previous:disabled {
+    opacity: 0.5;
+    cursor: default;
+}

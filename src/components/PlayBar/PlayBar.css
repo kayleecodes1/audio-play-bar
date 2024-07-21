@@ -46,25 +46,7 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
     transform: translate(-50%, -50%);
-}
-
-.PlayBar__play,
-.PlayBar__next,
-.PlayBar__previous {
-    color: currentColor;
-    background: none;
-    border: 0;
-    cursor: pointer;
-}
-
-.PlayBar__next:disabled,
-.PlayBar__previous:disabled {
-    opacity: 0.5;
-    cursor: default;
 }
 
 .PlayBar__progress-bar {
