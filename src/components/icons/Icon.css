@@ -1,0 +1,6 @@
+.Icon {
+    flex-shrink: 0;
+    display: inline-block;
+    fill: currentColor;
+    user-select: none;
+}

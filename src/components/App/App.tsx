@@ -1,5 +1,5 @@
 import React from 'react';
-import PlayBar from './PlayBar';
+import PlayBar from '../PlayBar';
 
 const App: React.FC = () => {
     return (
