@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import PlayControls from '../PlayControls';
+import SeekBar from '../SeekBar';
 import VolumeControls from '../VolumeControls';
 import { usePlaylistContext } from '../../contexts/PlaylistContext';
 import formatTime from '../../utilities/formatTime';
@@ -21,55 +22,37 @@ const PlayBar: React.FC = () => {
         setVolume,
     } = playlistContext;
 
-    const [dragState, setDragState] = useState({
-        isDragging: false,
+    const [seekState, setSeekState] = useState({
+        isSeeking: false,
         wasPlaying: false,
     });
 
-    const progressBarRef = useRef<HTMLDivElement | null>(null);
+    const handleStartSeek = useCallback(
+        (value: number) => {
+            setSeekState({ isSeeking: true, wasPlaying: isPlaying });
+            pause();
+            setCurrentTime(value * currentSong.duration);
+        },
+        [currentSong.duration, isPlaying, pause, setCurrentTime],
+    );
 
-    const handleProgressMouseDown: React.MouseEventHandler = (event) => {
-        event.preventDefault();
-        if (!progressBarRef.current) {
-            return;
-        }
+    const handleSeek = useCallback(
+        (value: number) => {
+            setCurrentTime(value * currentSong.duration);
+        },
+        [currentSong.duration, setCurrentTime],
+    );
 
-        setDragState({ isDragging: true, wasPlaying: isPlaying });
-        pause();
-
-        const { clientX } = event;
-        const { x, width } = progressBarRef.current.getBoundingClientRect();
-        const targetProgress = Math.max(0, Math.min(1, (clientX - x) / width));
-        setCurrentTime(targetProgress * currentSong.duration);
-    };
-
-    useEffect(() => {
-        const handleMouseMove = (event: MouseEvent) => {
-            if (!dragState.isDragging || !progressBarRef.current) {
-                return;
+    const handleEndSeek = useCallback(
+        (value: number) => {
+            setSeekState({ isSeeking: false, wasPlaying: false });
+            if (seekState.wasPlaying) {
+                play();
             }
-
-            const { clientX } = event;
-            const { x, width } = progressBarRef.current.getBoundingClientRect();
-            const targetProgress = Math.max(0, Math.min(1, (clientX - x) / width));
-            setCurrentTime(targetProgress * currentSong.duration);
-        };
-
-        const handleMouseUp = () => {
-            setDragState({ isDragging: false, wasPlaying: false });
-            if (dragState.wasPlaying) {
-                play(); // TODO
-            }
-        };
-
-        document.addEventListener('mousemove', handleMouseMove);
-        document.addEventListener('mouseup', handleMouseUp);
-
-        return () => {
-            document.removeEventListener('mousemove', handleMouseMove);
-            document.removeEventListener('mouseup', handleMouseUp);
-        };
-    }, [currentSong.duration, isPlaying, play, setCurrentTime, dragState.isDragging, dragState.wasPlaying]);
+            setCurrentTime(value * currentSong.duration);
+        },
+        [currentSong.duration, play, setCurrentTime, seekState.wasPlaying],
+    );
 
     const displayCurrentTime = formatTime(currentSong.currentTime);
     const displayDuration = formatTime(currentSong.duration);
@@ -89,7 +72,7 @@ const PlayBar: React.FC = () => {
                 </div>
                 <div className="PlayBar__play-controls">
                     <PlayControls
-                        isPlaying={isPlaying || dragState.wasPlaying}
+                        isPlaying={isPlaying || seekState.wasPlaying}
                         onSkipNext={navigateNext}
                         onSkipPrevious={navigatePrevious}
                         onTogglePlay={togglePlay}
@@ -99,9 +82,7 @@ const PlayBar: React.FC = () => {
                     <VolumeControls onChange={setVolume} value={volume} />
                 </div>
             </div>
-            <div className="PlayBar__progress-bar" ref={progressBarRef} onMouseDown={handleProgressMouseDown}>
-                <div className="PlayBar__progress" style={{ width: `${progress * 100}%` }} />
-            </div>
+            <SeekBar onEndSeek={handleEndSeek} onSeek={handleSeek} onStartSeek={handleStartSeek} value={progress} />
         </div>
     );
 };

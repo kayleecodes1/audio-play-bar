@@ -17,8 +17,8 @@ const PlaylistProvider: React.FC<PlaylistProviderProps> = ({ children, playlist 
 
     // When the playlist changes, clamp the current song index to the range.
     useEffect(() => {
-        setCurrentSongIndex((prevValue) => Math.max(0, Math.min(playlist.length - 1), prevValue));
-    }, [playlist]);
+        setCurrentSongIndex((prevValue) => Math.max(0, Math.min(playlist.length - 1, prevValue)));
+    }, [playlist.length]);
 
     // When the current song changes, instantiate the audio and prepare for playback.
     useEffect(() => {

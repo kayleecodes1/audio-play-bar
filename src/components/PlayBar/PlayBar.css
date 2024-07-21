@@ -56,18 +56,3 @@
 .PlayBar__volume-controls {
     margin-right: 8px;
 }
-
-.PlayBar__progress-bar {
-    height: 8px;
-    background: #565252;
-    border-radius: 0 0 8px 8px;
-    overflow: hidden;
-}
-
-.PlayBar__progress {
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 100%;
-    background: #faf7f5;
-}
