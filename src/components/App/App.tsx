@@ -1,9 +1,10 @@
 import React from 'react';
 import PlayBar from '../PlayBar';
+import './App.styles.css'
 
 const App: React.FC = () => {
     return (
-        <div>
+        <div className="App">
             <PlayBar />
         </div>
     );

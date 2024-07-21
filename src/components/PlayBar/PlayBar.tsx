@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PlayControls from '../PlayControls';
+import VolumeControls from '../VolumeControls';
 import { usePlaylistContext } from '../../contexts/PlaylistContext';
 import formatTime from '../../utilities/formatTime';
 import './PlayBar.css';
@@ -7,8 +8,18 @@ import './PlayBar.css';
 const PlayBar: React.FC = () => {
     const playlistContext = usePlaylistContext();
 
-    const { currentSong, isPlaying, play, pause, togglePlay, setCurrentTime, navigatePrevious, navigateNext } =
-        playlistContext;
+    const {
+        currentSong,
+        isPlaying,
+        play,
+        pause,
+        togglePlay,
+        setCurrentTime,
+        navigatePrevious,
+        navigateNext,
+        volume,
+        setVolume,
+    } = playlistContext;
 
     const [dragState, setDragState] = useState({
         isDragging: false,
@@ -37,6 +48,7 @@ const PlayBar: React.FC = () => {
             if (!dragState.isDragging || !progressBarRef.current) {
                 return;
             }
+
             const { clientX } = event;
             const { x, width } = progressBarRef.current.getBoundingClientRect();
             const targetProgress = Math.max(0, Math.min(1, (clientX - x) / width));
@@ -75,13 +87,16 @@ const PlayBar: React.FC = () => {
                         </div>
                     </div>
                 </div>
-                <div className="PlayBar__controls">
+                <div className="PlayBar__play-controls">
                     <PlayControls
                         isPlaying={isPlaying || dragState.wasPlaying}
                         onSkipNext={navigateNext}
                         onSkipPrevious={navigatePrevious}
                         onTogglePlay={togglePlay}
                     />
+                </div>
+                <div className="PlayBar__volume-controls">
+                    <VolumeControls onChange={setVolume} value={volume} />
                 </div>
             </div>
             <div className="PlayBar__progress-bar" ref={progressBarRef} onMouseDown={handleProgressMouseDown}>

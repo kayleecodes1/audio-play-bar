@@ -14,6 +14,8 @@ export interface PlaylistContextValue {
     setCurrentTime: (time: number) => void;
     navigatePrevious?: () => void;
     navigateNext?: () => void;
+    volume: number;
+    setVolume: (volume: number) => void;
 }
 
 const PlaylistContext = createContext<PlaylistContextValue | null>(null);

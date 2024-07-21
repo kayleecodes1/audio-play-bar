@@ -8,9 +8,10 @@
 .PlayControls__play,
 .PlayControls__next,
 .PlayControls__previous {
+    display: flex;
     color: currentColor;
     background: none;
-    padding: 0;
+    padding: 4px;
     border-radius: 8px;
     border: 0;
     cursor: pointer;

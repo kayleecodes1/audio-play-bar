@@ -11,6 +11,7 @@ const PlaylistProvider: React.FC<PlaylistProviderProps> = ({ children, playlist 
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
+    const [volume, setVolume] = useState(1);
 
     const audioRef = useRef<HTMLAudioElement>(new Audio());
 
@@ -70,6 +71,11 @@ const PlaylistProvider: React.FC<PlaylistProviderProps> = ({ children, playlist 
         };
     }, []);
 
+    // When volume changes, update the volume of the audio accordingly.
+    useEffect(() => {
+        audioRef.current.volume = Math.max(0, Math.min(1, volume));
+    }, [volume]);
+
     const currentSong = useMemo<PlaylistContextValue['currentSong']>(
         () => ({
             title: playlist[currentSongIndex]?.title,
@@ -124,8 +130,21 @@ const PlaylistProvider: React.FC<PlaylistProviderProps> = ({ children, playlist 
             togglePlay,
             navigatePrevious,
             navigateNext,
+            volume,
+            setVolume,
         }),
-        [currentSong, isPlaying, play, pause, togglePlay, _setCurrentTime, navigatePrevious, navigateNext],
+        [
+            currentSong,
+            isPlaying,
+            play,
+            pause,
+            togglePlay,
+            _setCurrentTime,
+            navigatePrevious,
+            navigateNext,
+            volume,
+            setVolume,
+        ],
     );
 
     return <PlaylistContext.Provider value={value}>{children}</PlaylistContext.Provider>;
