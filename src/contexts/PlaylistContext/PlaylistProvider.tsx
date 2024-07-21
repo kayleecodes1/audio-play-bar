@@ -3,7 +3,7 @@ import PlaylistContext, { PlaylistContextValue } from './PlaylistContext';
 
 interface PlaylistProviderProps {
     children?: React.ReactNode;
-    playlist: { title: string; src: string }[];
+    playlist: { title: string; thumbnail: string; src: string }[];
 }
 
 const PlaylistProvider: React.FC<PlaylistProviderProps> = ({ children, playlist }) => {
@@ -73,6 +73,7 @@ const PlaylistProvider: React.FC<PlaylistProviderProps> = ({ children, playlist 
     const currentSong = useMemo<PlaylistContextValue['currentSong']>(
         () => ({
             title: playlist[currentSongIndex]?.title,
+            thumbnail: playlist[currentSongIndex]?.thumbnail,
             currentTime,
             duration,
         }),

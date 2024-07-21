@@ -70,22 +70,27 @@ const PlayBar: React.FC = () => {
 
     return (
         <div className="PlayBar">
-            <div className="PlayBar__detail">
-                <div className="PlayBar__title">{currentSong.title}</div>
-                <div className="PlayBar__time">
-                    {displayCurrentTime} / {displayDuration}
+            <div className="PlayBar__content">
+                <div className="PlayBar__detail">
+                    <img className="PlayBar__thumbnail" src={currentSong.thumbnail} />
+                    <div className="PlayBar__meta">
+                        <div className="PlayBar__title">{currentSong.title}</div>
+                        <div className="PlayBar__time">
+                            {displayCurrentTime} / {displayDuration}
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div className="PlayBar__controls">
-                <button className="PlayBar__previous" disabled={!navigatePrevious} onClick={navigatePrevious}>
-                    <SkipPreviousIcon size={24} />
-                </button>
-                <button className="PlayBar__play" onClick={togglePlay}>
-                    {isPlaying || dragState.wasPlaying ? <PauseIcon size={32} /> : <PlayIcon size={32} />}
-                </button>
-                <button className="PlayBar__next" disabled={!navigateNext} onClick={navigateNext}>
-                    <SkipNextIcon size={24} />
-                </button>
+                <div className="PlayBar__controls">
+                    <button className="PlayBar__previous" disabled={!navigatePrevious} onClick={navigatePrevious}>
+                        <SkipPreviousIcon size={24} />
+                    </button>
+                    <button className="PlayBar__play" onClick={togglePlay}>
+                        {isPlaying || dragState.wasPlaying ? <PauseIcon size={32} /> : <PlayIcon size={32} />}
+                    </button>
+                    <button className="PlayBar__next" disabled={!navigateNext} onClick={navigateNext}>
+                        <SkipNextIcon size={24} />
+                    </button>
+                </div>
             </div>
             <div className="PlayBar__progress-bar" ref={progressBarRef} onMouseDown={handleProgressMouseDown}>
                 <div className="PlayBar__progress" style={{ width: `${progress * 100}%` }} />

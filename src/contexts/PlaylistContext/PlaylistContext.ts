@@ -3,6 +3,7 @@ import { createContext } from 'react';
 export interface PlaylistContextValue {
     currentSong: {
         title: string;
+        thumbnail: string;
         currentTime: number;
         duration: number;
     },
